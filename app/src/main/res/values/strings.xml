@@ -9,5 +9,6 @@
       or implied. See the License for the specific language governing permissions and limitations under
       the License.
       -->
-    <string name="app_name">AndroidDevChallenge</string>
+    <string name="app_name">Chrono Clock</string>
+    <string name="count_down_screen_intro_text">The trouble is, you think you have time !!</string>
 </resources>
