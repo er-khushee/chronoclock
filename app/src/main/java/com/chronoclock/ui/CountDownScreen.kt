@@ -56,7 +56,7 @@ fun CountDownView(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(id = R.drawable.ic_bubbles),
         contentDescription = null,
-        alpha = 0.2f,
+        alpha = 0.1f,
         contentScale = ContentScale.Fit,
         colorFilter = ColorFilter.tint(transition.color)
     )
