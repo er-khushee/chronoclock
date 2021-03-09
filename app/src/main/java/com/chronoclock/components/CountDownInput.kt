@@ -121,5 +121,6 @@ fun CountDownInput(
 }
 
 private fun getTime(minutes: Int, seconds: Int): String {
-    return "${minutes.format()}:${seconds.format()}"
+    return if (minutes >= 0 && seconds >= 0) "${minutes.format()}:${seconds.format()}"
+    else "00:00"
 }

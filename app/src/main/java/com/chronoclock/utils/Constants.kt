@@ -15,7 +15,3 @@ fun Long.formatTime(): String = String.format(
 )
 
 fun Int.format(): String = String.format(Constants.TIME_FORMAT, this)
-
-enum class TimerState {
-    PLAY, PAUSE, STOP
-}
