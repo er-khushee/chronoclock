@@ -15,7 +15,7 @@ class MainViewModel : ViewModel() {
     private var countDownTimer: CountDownTimer? = null
 
     private val _time = MutableLiveData(
-        Constants.POMODORO_TIME.formatTime()
+        Constants.INITIAL_TIME.formatTime()
     )
     val time: LiveData<String> = _time
 
@@ -33,9 +33,13 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun updateTime(time: String) {
+        _time.value = time
+    }
+
     fun stopTimer() {
         countDownTimer?.cancel()
-        handleTimerValues(false, Constants.POMODORO_TIME.formatTime(), 1.0F)
+        handleTimerValues(false, Constants.INITIAL_TIME.formatTime(), 1.0F)
     }
 
     private fun pauseTimer() {
@@ -45,7 +49,7 @@ class MainViewModel : ViewModel() {
 
     private fun startTimer() {
         _isPlaying.value = true
-        val timeInMillis = _time.value?.format() ?: Constants.POMODORO_TIME
+        val timeInMillis = _time.value?.format() ?: Constants.INITIAL_TIME
         val previousProgress = if (_progress.value!! > 0) progress.value!! else 1
 
         countDownTimer = object : CountDownTimer(

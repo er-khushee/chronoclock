@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,7 @@ fun CountDownIndicator(
                 Text(
                     text = time,
                     style = MaterialTheme.typography.h4,
+                    color = contentColorFor(backgroundColor = transition.color),
                     modifier = Modifier
                         .width(size.dp.div(1.2f))
                         .height(size.dp.div(1.2f))

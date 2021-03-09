@@ -1,5 +1,7 @@
 package com.chronoclock.ui
 
+import CountDownInput
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -29,13 +31,15 @@ import com.chronoclock.utils.formatTime
 @ExperimentalAnimationApi
 @Composable
 fun CountDownView(viewModel: MainViewModel = viewModel()) {
-    val time by viewModel.time.observeAsState(Constants.POMODORO_TIME.formatTime())
+    val time by viewModel.time.observeAsState(Constants.INITIAL_TIME.formatTime())
     val progress by viewModel.progress.observeAsState(0f)
     val isPlaying by viewModel.isPlaying.observeAsState(false)
 
-    CountDownView(time = time, progress = progress, isPlaying = isPlaying) {
-        viewModel.handleCountDownActions(it)
-    }
+    CountDownView(time = time,
+        progress = progress,
+        isPlaying = isPlaying,
+        updateTime = { viewModel.updateTime(it) },
+        countDownAction = { viewModel.handleCountDownActions(it) })
 }
 
 @ExperimentalAnimationApi
@@ -44,6 +48,7 @@ fun CountDownView(
     time: String,
     progress: Float,
     isPlaying: Boolean,
+    updateTime: (T: String) -> Unit,
     countDownAction: (T: MainViewModel.Actions) -> Unit
 ) {
     val transition = updateTransitionData(progress = progress)
@@ -68,13 +73,21 @@ fun CountDownView(
             text = stringResource(R.string.count_down_screen_intro_text)
         )
 
-        CountDownIndicator(
-            Modifier.padding(20.dp),
-            progress = progress,
-            time = time,
-            size = 180,
-            stroke = 6
-        )
+        AnimatedVisibility(visible = isPlaying.not()) {
+            CountDownInput(modifier = Modifier.size(36.dp),
+                time = time,
+                onTimeUpdated = { updateTime(it) })
+        }
+
+        AnimatedVisibility(visible = isPlaying) {
+            CountDownIndicator(
+                Modifier.padding(20.dp),
+                progress = progress,
+                time = time,
+                size = 180,
+                stroke = 6
+            )
+        }
 
         Box(
             modifier = Modifier
